@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Altschool</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+  <link href="https://fonts.googleapis.com/css?family=Acme" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 20px;
+    }
+
+    .row {
+      margin: 15px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+<div class="container-fluid">
+
+  <!-- <form action="/action_page.php"> -->
+  <form id="myForm">
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4" align="center">
+        <select name="nameGIF" id="mySelect">
+          <option value="about">About</option>
+          <option value="above">Above</option>
+          <option value="across">Across</option>
+          <option value="app">App</option>
+          <option value="apple">Apple</option>
+          <option value="appreciate">Appreciate</option>
+          <option value="bad">Bad</option>
+          <option value="ball">Ball</option>
+          <option value="balloon">Balloon</option>
+          <option value="bell">Bell</option>
+          <option value="cat">Cat</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4">
+        <button id="go" type="submit" class="btn btn-success btn-block btn-responsive">GO</button>
+      </div>
+    </div>
+  </form>
+    <div class="row">
+      <div class="col-xs-4 col-xs-offset-4" align="center">
+        <img id="myGIF" class="img-thumbnail" src="" alt="GIF">
+      </div>
+    </div>
+  </dv>
+  
+</div>
+
+ 
+
+<script>
+
+
+
+$('#go').click('submit', function() {
+  event.preventDefault();
+  var nameGif = $('#mySelect option:selected').val();
+  console.log(nameGif);
+
+  var url = 'http://api.giphy.com/v1/gifs/search?q='+nameGif+'&api_key=dc6zaTOxFJmzC&limit=1';
+  $.ajax({
+    url: url,
+    type: 'GET',
+    dataType: 'JSON',
+    contentType: 'application/json;charset=UTF-8',
+    cache: false,
+    success: function (data, status, error) {
+      console.log('success', data);
+      $('#myGIF').attr('src',data.data['0'].images.downsized.url);
+    },
+
+    error: function (data, status, error) {
+      console.log('error', data, status, error);
+      alert('Can not show GIF. Try again.');
+    }
+  })
+
+});
+
+</script>
+
+</body>
+</html>  
